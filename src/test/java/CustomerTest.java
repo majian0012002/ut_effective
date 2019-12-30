@@ -5,11 +5,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-
-/* The CustomerTest class completely covers our Customer domain
-        object and has very little duplication; many would
-        consider this a well written set of tests.*/
-
 public class CustomerTest {
     Customer john, steve, pat, david;
     String johnName = "John",
@@ -21,72 +16,72 @@ public class CustomerTest {
     @Before
     public void setup() {
         david = ObjectMother
-                .customerWithNoRentals(
-                        davidName);
+                .customerWithNoRentals(davidName);
         john = ObjectMother
-                .customerWithOneNewRelease(
-                        johnName);
+                .customerWithOneNewRelease(johnName);
         pat = ObjectMother
                 .customerWithOneOfEachRentalType(
                         patName);
         steve = ObjectMother
                 .customerWithOneNewReleaseAndOneRegular(
                         steveName);
-        customers =
-                new Customer[]
-                        {david, john, steve, pat};
+        customers = new Customer[]{
+                david, john, steve, pat};
     }
 
     @Test
-    public void getName() {
+    public void davidStatement() {
         assertEquals(
-                davidName, david.getName());
-        assertEquals(
-                johnName, john.getName());
-        assertEquals(
-                steveName, steve.getName());
-        assertEquals(
-                patName, pat.getName());
+                expStatement(
+                        "Rental record for %s\n%sAmount " +
+                                "owed is %s\nYou earned %s " +
+                                "frequent renter points",
+                        david,
+                        rentalInfo(
+                                "\t", "", david.getRentals())),
+                david.statement());
     }
 
     @Test
-    public void statement() {
-        for (int i = 0; i < customers.length; i++) {
-            assertEquals(
-                    expStatement(
-                            "Rental record for %s\n" +
-                                    "%sAmount owed is %s\n" +
-                                    "You earned %s frequent " +
-                                    "renter points",
-                            customers[i],
-                            rentalInfo(
-                                    "\t", "",
-                                    customers[i].getRentals())),
-                    customers[i].statement());
-        }
-    }
-
-
-    @Test
-    public void htmlStatement() {
-        for (int i = 0; i < customers.length; i++) {
-            assertEquals(
-                    expStatement(
-                            "<h1>Rental record for " +
-                                    "<em>%s</em></h1>\n%s" +
-                                    "<p>Amount owed is <em>%s</em>" +
-                                    "</p>\n<p>You earned <em>%s" +
-                                    " frequent renter points</em></p>",
-                            customers[i],
-                            rentalInfo(
-                                    "<p>", "</p>",
-                                    customers[i].getRentals())),
-                    customers[i].htmlStatement());
-        }
+    public void johnStatement() {
+        assertEquals(
+                expStatement(
+                        "Rental record for %s\n%sAmount " +
+                                "owed is %s\nYou earned %s " +
+                                "frequent renter points",
+                        john,
+                        rentalInfo(
+                                "\t", "", john.getRentals())),
+                john.statement());
     }
 
     @Test
-            (expected = IllegalArgumentException.class)
+    public void patStatement() {
+        assertEquals(
+                expStatement(
+                        "Rental record for %s\n%sAmount " +
+                                "owed is %s\nYou earned %s " +
+                                "frequent renter points",
+                        pat,
+                        rentalInfo(
+                                "\t", "", pat.getRentals())),
+                pat.statement());
+    }
+
+    @Test
+    public void steveStatement() {
+        assertEquals(
+                expStatement(
+                        "Rental record for %s\n%s" +
+                                "Amount owed is %s\nYou earned %s " +
+                                "frequent renter points",
+                        steve,
+                        rentalInfo(
+                                "\t", "", steve.getRentals())),
+                steve.statement());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void invalidTitle() {
         ObjectMother
                 .customerWithNoRentals("Bob")
@@ -96,6 +91,7 @@ public class CustomerTest {
                                         Type.UNKNOWN),
                                 4));
     }
+
 
     public static String rentalInfo(
             String startsWith,
@@ -123,6 +119,4 @@ public class CustomerTest {
                 customer.getTotalCharge(),
                 customer.getTotalPoints());
     }
-
-
 }
