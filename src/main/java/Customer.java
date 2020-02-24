@@ -14,10 +14,6 @@ public class Customer {
         return name;
     }
 
-    public List<Rental> getRentals() {
-        return rentals;
-    }
-
     public void addRental(Rental rental) {
         rentals.add(rental);
     }

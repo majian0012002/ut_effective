@@ -1,8 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 public class CustomerTest {
@@ -32,53 +30,55 @@ public class CustomerTest {
     @Test
     public void davidStatement() {
         assertEquals(
-                expStatement(
-                        "Rental record for %s\n%sAmount " +
-                                "owed is %s\nYou earned %s " +
-                                "frequent renter points",
-                        david,
-                        rentalInfo(
-                                "\t", "", david.getRentals())),
+                "Rental record for David\nAmount " +
+                        "owed is 0.0\n" +
+                        "You earned 0 frequent renter points",
                 david.statement());
     }
 
     @Test
     public void johnStatement() {
         assertEquals(
-                expStatement(
-                        "Rental record for %s\n%sAmount " +
-                                "owed is %s\nYou earned %s " +
-                                "frequent renter points",
-                        john,
-                        rentalInfo(
-                                "\t", "", john.getRentals())),
+                "Rental record for John\n\t" +
+                        "Godfather 4\t9.0\n" +
+                        "Amount owed is 9.0\n" +
+                        "You earned 2 frequent renter points",
                 john.statement());
     }
 
     @Test
     public void patStatement() {
         assertEquals(
-                expStatement(
-                        "Rental record for %s\n%sAmount " +
-                                "owed is %s\nYou earned %s " +
-                                "frequent renter points",
-                        pat,
-                        rentalInfo(
-                                "\t", "", pat.getRentals())),
+                "Rental record for Pat\n\t" +
+                        "Godfather 4\t9.0\n" +
+                        "\tScarface\t3.5\n" +
+                        "\tLion King\t1.5\n" +
+                        "Amount owed is 14.0\n" +
+                        "You earned 4 frequent renter points",
                 pat.statement());
     }
 
     @Test
     public void steveStatement() {
         assertEquals(
-                expStatement(
-                        "Rental record for %s\n%s" +
-                                "Amount owed is %s\nYou earned %s " +
-                                "frequent renter points",
-                        steve,
-                        rentalInfo(
-                                "\t", "", steve.getRentals())),
+                "Rental record for Steve\n\t" +
+                        "Godfather 4\t9.0\n" +
+                        "\tScarface\t3.5\n" +
+                        "Amount owed is 12.5\n" +
+                        "You earned 3 frequent renter points",
                 steve.statement());
+    }
+
+    @Test
+    public void patHtmlStatement() {
+        assertEquals(
+                "<h1>Rental record for <em>Pat</em></h1>\n" +
+                        "<p>Godfather 4 9.0</p>\n" +
+                        "<p>Scarface 3.5</p>\n" +
+                        "<p>Lion King 1.5</p>\n" +
+                        "<p>Amount owed is <em>14.0</em></p>\n" +
+                        "<p>You earned <em>4 frequent renter points</em></p>",
+                pat.htmlStatement());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -92,31 +92,4 @@ public class CustomerTest {
                                 4));
     }
 
-
-    public static String rentalInfo(
-            String startsWith,
-            String endsWith,
-            List<Rental> rentals) {
-        String result = "";
-        for (Rental rental : rentals)
-            result += String.format(
-                    "%s%s\t%s%s\n",
-                    startsWith,
-                    rental.getMovie().getTitle(),
-                    rental.getCharge(),
-                    endsWith);
-        return result;
-    }
-
-    public static String expStatement(
-            String formatStr,
-            Customer customer,
-            String rentalInfo) {
-        return String.format(
-                formatStr,
-                customer.getName(),
-                rentalInfo,
-                customer.getTotalCharge(),
-                customer.getTotalPoints());
-    }
 }
