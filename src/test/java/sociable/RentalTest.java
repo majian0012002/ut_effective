@@ -1,11 +1,14 @@
-import org.junit.Test;
+package sociable;
 
+import org.junit.Test;
+import com.ep.*;
+import builder.a;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
 public class RentalTest {
-   /* @Test
-    public void rentalIsStartedIfInStore() {
+    @Test
+    public void
+    isStartedIfInStoreStateBased() {
         Movie movie = a.movie.build();
         Rental rental =
                 a.rental.w(movie).build();
@@ -15,10 +18,9 @@ public class RentalTest {
         assertEquals(
                 0, store.getAvailability(movie));
     }
-
     @Test
     public void
-    rentalDoesNotStartIfNotAvailable() {
+    doesNotStartIfNotAvailableStateBased() {
         Movie movie = a.movie.build();
         Rental rental = a.rental.build();
         Store store = a.store.build();
@@ -27,9 +29,10 @@ public class RentalTest {
         assertEquals(
                 0, store.getAvailability(movie));
     }
-*/
+
     @Test
-    public void rentalIsStartedIfInStore() {
+    public void
+    isStartedIfInStoreInteractionBased() {
         Movie movie = a.movie.build();
         Rental rental =
                 a.rental.w(movie).build();
@@ -40,9 +43,9 @@ public class RentalTest {
         assertTrue(rental.isStarted());
         verify(store).remove(movie);
     }
-
     @Test
-    public void rentalDoesNotStartIfNotAvailable() {
+    public void
+    notStartedIfUnavailableInteractionBased() {
         Rental rental = a.rental.build();
         Store store = mock(Store.class);
         rental.start(store);

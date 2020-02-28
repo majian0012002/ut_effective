@@ -1,3 +1,4 @@
+package com.ep;
 public class Movie {
     private String title;
     Price price;

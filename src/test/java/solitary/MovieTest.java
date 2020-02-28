@@ -1,8 +1,9 @@
+package solitary;
 import org.junit.Assert;
 import org.junit.Test;
-
+import com.ep.*;
 import static org.junit.Assert.assertEquals;
-
+import builder.*;
 public class MovieTest {
     @Test
     public void getChargeForRegular() {

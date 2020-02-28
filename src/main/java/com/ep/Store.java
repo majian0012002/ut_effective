@@ -1,4 +1,7 @@
+package com.ep;
+
 import java.util.Map;
+
 public class Store {
     private Map<Movie, Integer> movies;
     public Store(Map<Movie, Integer> movies) {

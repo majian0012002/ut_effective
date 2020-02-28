@@ -1,13 +1,18 @@
+package solitary;
+
+import builder.a;
+import com.ep.Rental;
+import com.ep.Type;
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CustomerTest {
     @Test
     public void getName() {
-        assertEquals(
+        Assert.assertEquals(
                 "John",
                 a.customer.w(
                         "John").build().getName());
@@ -16,7 +21,7 @@ public class CustomerTest {
 
     @Test
     public void noRentalsStatement() {
-        assertEquals(
+        Assert.assertEquals(
                 "Rental record for Jim\nAmount owed" +
                         " is 0.0\n" +
                         "You earned 0 frequent renter points",
@@ -25,7 +30,7 @@ public class CustomerTest {
 
     @Test
     public void oneRentalStatement() {
-        assertEquals(
+        Assert.assertEquals(
                 "Rental record for Jim\n\tnull\n" +
                         "Amount owed is 0.0\n" +
                         "You earned 0 frequent renter points",
@@ -36,7 +41,7 @@ public class CustomerTest {
 
     @Test
     public void twoRentalsStatement() {
-        assertEquals(
+        Assert.assertEquals(
                 "Rental record for Jim\n\t" +
                         "null\n\tnull\n" +
                         "Amount owed is 0.0\n" +
@@ -49,7 +54,7 @@ public class CustomerTest {
 
     @Test
     public void noRentalsHtmlStatement() {
-        assertEquals(
+        Assert.assertEquals(
                 "<h1>Rental record for <em>Jim</em>" +
                         "</h1>\n<p>Amount owed is <em>0.0" +
                         "</em></p>\n<p>You earned <em>0 " +
@@ -60,7 +65,7 @@ public class CustomerTest {
     @Test
     public void oneRentalHtmlStatement() {
         Rental rental = mock(Rental.class);
-        assertEquals(
+        Assert.assertEquals(
                 "<h1>Rental record for <em>Jim</em>" +
                         "</h1>\n<p>null</p>\n<p>Amount owed " +
                         "is <em>0.0</em></p>\n<p>You earned " +
@@ -73,7 +78,7 @@ public class CustomerTest {
 
     @Test
     public void twoRentalsHtmlStatement() {
-        assertEquals(
+        Assert.assertEquals(
                 "<h1>Rental record for <em>Jim</em>" +
                         "</h1>\n<p>null</p>\n<p>null</p>\n" +
                         "<p>Amount owed is <em>0.0</em></p>" +
@@ -87,7 +92,7 @@ public class CustomerTest {
 
     @Test
     public void noRentalsCharge() {
-        assertEquals(
+        Assert.assertEquals(
                 0.0,
                 a.customer.build().getTotalCharge(),
                 0);
@@ -97,7 +102,7 @@ public class CustomerTest {
     public void twoRentalsCharge() {
         Rental rental = mock(Rental.class);
         when(rental.getCharge()).thenReturn(2.0);
-        assertEquals(
+        Assert.assertEquals(
                 4.0,
                 a.customer.w(
                         rental,
@@ -109,7 +114,7 @@ public class CustomerTest {
     public void threeRentalsCharge() {
         Rental rental = mock(Rental.class);
         when(rental.getCharge()).thenReturn(2.0);
-        assertEquals(
+        Assert.assertEquals(
                 6.0,
                 a.customer.w(
                         rental,
@@ -120,7 +125,7 @@ public class CustomerTest {
 
     @Test
     public void noRentalsPoints() {
-        assertEquals(
+        Assert.assertEquals(
                 0,
                 a.customer.build().getTotalPoints());
     }
@@ -129,7 +134,7 @@ public class CustomerTest {
     public void twoRentalsPoints() {
         Rental rental = mock(Rental.class);
         when(rental.getPoints()).thenReturn(2);
-        assertEquals(
+        Assert.assertEquals(
                 4,
                 a.customer.w(
                         rental,
@@ -140,7 +145,7 @@ public class CustomerTest {
     public void threeRentalsPoints() {
         Rental rental = mock(Rental.class);
         when(rental.getPoints()).thenReturn(2);
-        assertEquals(
+        Assert.assertEquals(
                 6,
                 a.customer.w(
                         rental,
@@ -148,43 +153,5 @@ public class CustomerTest {
                         rental).build().getTotalPoints());
     }
 
-    @Test
-    public void allRentalTypesStatement() {
-        assertEquals(
-                "Rental record for Pat\n" +
-                        "\tGodfather 4 9.0\n" +
-                        "\tScarface 3.5\n" +
-                        "\tLion King 1.5\n" +
-                        "Amount owed is 14.0\n" +
-                        "You earned 4 frequent renter points",
-                a.customer.w("Pat").w(
-                        a.rental.w(a.movie.w(Type.NEW_RELEASE)),
-                        a.rental.w(
-                                a.movie.w("Scarface").w(Type.REGULAR)),
-                        a.rental.w(
-                                a.movie.w("Lion King").w(
-                                        Type.CHILDREN))).build().statement());
-    }
-
-
-
-    @Test
-    public void allRentalTypesHtmlStatement() {
-        assertEquals(
-                "<h1>Rental record for <em>Pat</em>" +
-                        "</h1>\n<p>Godfather 4 9.0</p>\n" +
-                        "<p>Scarface 3.5</p>\n<p>Lion King" +
-                        " 1.5</p>\n<p>Amount owed is <em>" +
-                        "14.0</em></p>\n<p>You earned <em>" +
-                        "4 frequent renter points</em></p>",
-                a.customer.w("Pat").w(
-                        a.rental.w(a.movie.w(Type.NEW_RELEASE)),
-                        a.rental.w(
-                                a.movie.w("Scarface").w(Type.REGULAR)),
-                        a.rental.w(
-                                a.movie.w("Lion King").w(
-                                        Type.CHILDREN))).build()
-                        .htmlStatement());
-    }
 
 }

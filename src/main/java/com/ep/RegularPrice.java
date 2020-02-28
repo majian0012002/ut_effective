@@ -1,3 +1,5 @@
+package com.ep;
+
 public class RegularPrice extends Price {
     @Override
     public double getCharge(int daysRented) {

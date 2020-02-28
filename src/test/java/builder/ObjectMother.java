@@ -1,3 +1,6 @@
+package builder;
+
+import com.ep.*;
 public class ObjectMother {
     public static Customer
     customerWithOneOfEachRentalType(

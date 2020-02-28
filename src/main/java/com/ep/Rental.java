@@ -1,3 +1,5 @@
+package com.ep;
+
 public class Rental {
     Movie movie;
     private int daysRented;

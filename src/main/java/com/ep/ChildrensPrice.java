@@ -1,3 +1,4 @@
+package com.ep;
 public class ChildrensPrice extends Price {
     @Override
     double getCharge(int daysRented) {
