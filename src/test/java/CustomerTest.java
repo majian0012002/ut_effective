@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CustomerTest {
     @Test
@@ -82,6 +83,69 @@ public class CustomerTest {
                         mock(Rental.class),
                         mock(Rental.class)).build()
                         .htmlStatement());
+    }
+
+    @Test
+    public void noRentalsCharge() {
+        assertEquals(
+                0.0,
+                a.customer.build().getTotalCharge(),
+                0);
+    }
+
+    @Test
+    public void twoRentalsCharge() {
+        Rental rental = mock(Rental.class);
+        when(rental.getCharge()).thenReturn(2.0);
+        assertEquals(
+                4.0,
+                a.customer.w(
+                        rental,
+                        rental).build().getTotalCharge(),
+                0);
+    }
+
+    @Test
+    public void threeRentalsCharge() {
+        Rental rental = mock(Rental.class);
+        when(rental.getCharge()).thenReturn(2.0);
+        assertEquals(
+                6.0,
+                a.customer.w(
+                        rental,
+                        rental,
+                        rental).build().getTotalCharge(),
+                0);
+    }
+
+    @Test
+    public void noRentalsPoints() {
+        assertEquals(
+                0,
+                a.customer.build().getTotalPoints());
+    }
+
+    @Test
+    public void twoRentalsPoints() {
+        Rental rental = mock(Rental.class);
+        when(rental.getPoints()).thenReturn(2);
+        assertEquals(
+                4,
+                a.customer.w(
+                        rental,
+                        rental).build().getTotalPoints());
+    }
+
+    @Test
+    public void threeRentalsPoints() {
+        Rental rental = mock(Rental.class);
+        when(rental.getPoints()).thenReturn(2);
+        assertEquals(
+                6,
+                a.customer.w(
+                        rental,
+                        rental,
+                        rental).build().getTotalPoints());
     }
 
     @Test
