@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class CustomerTest {
     @Test
@@ -10,29 +11,79 @@ public class CustomerTest {
                 a.customer.w(
                         "John").build().getName());
     }
+
+
     @Test
     public void noRentalsStatement() {
         assertEquals(
-                "Rental record for David\nAmount " +
-                        "owed is 0.0\nYou earned 0 frequent " +
-                        "renter points",
-                a.customer.w(
-                        "David").build().statement());
+                "Rental record for Jim\nAmount owed" +
+                        " is 0.0\n" +
+                        "You earned 0 frequent renter points",
+                a.customer.build().statement());
     }
 
     @Test
-    public void oneNewReleaseStatement() {
+    public void oneRentalStatement() {
         assertEquals(
-                "Rental record for John\n" +
-                        "\tGodfather 4 9.0\n" +
-                        "Amount owed is 9.0\n" +
-                        "You earned 2 frequent renter points",
-                a.customer.w("John").w(
-                        a.rental.w(
-                                a.movie.w(
-                                        Type.NEW_RELEASE))).build()
+                "Rental record for Jim\n\tnull\n" +
+                        "Amount owed is 0.0\n" +
+                        "You earned 0 frequent renter points",
+                a.customer.w(
+                        mock(Rental.class)).build()
                         .statement());
     }
+
+    @Test
+    public void twoRentalsStatement() {
+        assertEquals(
+                "Rental record for Jim\n\t" +
+                        "null\n\tnull\n" +
+                        "Amount owed is 0.0\n" +
+                        "You earned 0 frequent renter points",
+                a.customer.w(
+                        mock(Rental.class),
+                        mock(Rental.class)).build()
+                        .statement());
+    }
+
+    @Test
+    public void noRentalsHtmlStatement() {
+        assertEquals(
+                "<h1>Rental record for <em>Jim</em>" +
+                        "</h1>\n<p>Amount owed is <em>0.0" +
+                        "</em></p>\n<p>You earned <em>0 " +
+                        "frequent renter points</em></p>",
+                a.customer.build().htmlStatement());
+    }
+
+    @Test
+    public void oneRentalHtmlStatement() {
+        Rental rental = mock(Rental.class);
+        assertEquals(
+                "<h1>Rental record for <em>Jim</em>" +
+                        "</h1>\n<p>null</p>\n<p>Amount owed " +
+                        "is <em>0.0</em></p>\n<p>You earned " +
+                        "<em>0 frequent renter points</em>" +
+                        "</p>",
+                a.customer.w(
+                        mock(Rental.class)).build()
+                        .htmlStatement());
+    }
+
+    @Test
+    public void twoRentalsHtmlStatement() {
+        assertEquals(
+                "<h1>Rental record for <em>Jim</em>" +
+                        "</h1>\n<p>null</p>\n<p>null</p>\n" +
+                        "<p>Amount owed is <em>0.0</em></p>" +
+                        "\n<p>You earned <em>0 frequent" +
+                        " renter points</em></p>",
+                a.customer.w(
+                        mock(Rental.class),
+                        mock(Rental.class)).build()
+                        .htmlStatement());
+    }
+
     @Test
     public void allRentalTypesStatement() {
         assertEquals(
@@ -51,46 +102,7 @@ public class CustomerTest {
                                         Type.CHILDREN))).build().statement());
     }
 
-    @Test
-    public void
-    newReleaseAndRegularStatement() {
-        assertEquals(
-                "Rental record for Steve\n" +
-                        "\tGodfather 4 9.0\n" +
-                        "\tScarface 3.5\n" +
-                        "Amount owed is 12.5\n" +
-                        "You earned 3 frequent renter points",
-                a.customer.w("Steve").w(
-                        a.rental.w(a.movie.w(Type.NEW_RELEASE)),
-                        a.rental.w(
-                                a.movie.w("Scarface").w(
-                                        Type.REGULAR))).build().statement());
-    }
-    @Test
-    public void noRentalsHtmlStatement() {
-        assertEquals(
-                "<h1>Rental record for <em>David" +
-                        "</em></h1>\n<p>Amount owed is <em>" +
-                        "0.0</em></p>\n<p>You earned <em>0 " +
-                        "frequent renter points</em></p>",
-                a.customer.w(
-                        "David").build().htmlStatement());
-    }
 
-    @Test
-    public void oneNewReleaseHtmlStatement() {
-        assertEquals(
-                "<h1>Rental record for <em>John</em>" +
-                        "</h1>\n<p>Godfather 4 9.0</p>\n" +
-                        "<p>Amount owed is <em>9.0</em></p>" +
-                        "\n<p>You earned <em>2 frequent " +
-                        "renter points</em></p>",
-                a.customer.w("John").w(
-                        a.rental.w(
-                                a.movie.w(
-                                        Type.NEW_RELEASE))).build()
-                        .htmlStatement());
-    }
 
     @Test
     public void allRentalTypesHtmlStatement() {
@@ -111,28 +123,4 @@ public class CustomerTest {
                         .htmlStatement());
     }
 
-    @Test
-    public void
-    newReleaseAndRegularHtmlStatement() {
-        assertEquals(
-                "<h1>Rental record for <em>Steve" +
-                        "</em></h1>\n<p>Godfather 4 9.0</p>" +
-                        "\n<p>Scarface 3.5</p>\n<p>Amount " +
-                        "owed is <em>12.5</em></p>\n<p>" +
-                        "You earned <em>3 frequent renter " +
-                        "points</em></p>",
-                a.customer.w("Steve").w(
-                        a.rental.w(a.movie.w(Type.NEW_RELEASE)),
-                        a.rental.w(
-                                a.movie.w("Scarface").w(
-                                        Type.REGULAR))).build()
-                        .htmlStatement());
-    }
-//    @Test
-//            (expected=IllegalArgumentException.class)
-//    public void invalidTitle() {
-//        a.customer.w(
-//                a.rental.w(
-//                        a.movie.w(Type.UNKNOWN))).build();
-//    }
 }

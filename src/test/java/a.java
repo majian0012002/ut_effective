@@ -31,6 +31,10 @@ public class a {
             return
                     new CustomerBuilder(name, rentals);
         }
+        public CustomerBuilder w(Rental... rentals) {
+            return new CustomerBuilder("Jim", rentals);
+        }
+
         public CustomerBuilder w(String name) {
             return
                     new CustomerBuilder(name, rentals);
