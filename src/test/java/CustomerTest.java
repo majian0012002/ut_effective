@@ -128,11 +128,11 @@ public class CustomerTest {
                                         Type.REGULAR))).build()
                         .htmlStatement());
     }
-    @Test
-            (expected=IllegalArgumentException.class)
-    public void invalidTitle() {
-        a.customer.w(
-                a.rental.w(
-                        a.movie.w(Type.UNKNOWN))).build();
-    }
+//    @Test
+//            (expected=IllegalArgumentException.class)
+//    public void invalidTitle() {
+//        a.customer.w(
+//                a.rental.w(
+//                        a.movie.w(Type.UNKNOWN))).build();
+//    }
 }
