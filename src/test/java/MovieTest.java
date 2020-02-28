@@ -4,45 +4,116 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MovieTest {
-    /*
-    //违反了 Assert Last原则
-    @Test(expected = IllegalArgumentException.class)
-    public void invalidTitle() {
-        a.movie.w(Type.UNKNOWN).build();
-    }
-    */
-
-/*
-
-    //仍然违反了 Assert Last: fail不是测试中最后的断言，而且容易忘记写
     @Test
-    public void invalidTitle() {
-        try {
-            a.movie.w(Type.UNKNOWN).build();
-            Assert.fail();
-        } catch (Exception ex) {
-            assertEquals(
-                    IllegalArgumentException.class,
-                    ex.getClass());
-        }
-    }
-*/
-
-/*
-    // 为会出现误报，但是不优雅
-    @Test
-    public void invalidTitle() {
-        Exception e = null;
-        try {
-            a.movie.w(Type.UNKNOWN).build();
-        } catch (Exception ex) {
-            e = ex;
-        }
+    public void getChargeForRegular() {
         assertEquals(
-                IllegalArgumentException.class,
-                e.getClass());
+                2.0,
+                a.movie.w(
+                        Type.REGULAR).build().getCharge(1),
+                0);
+        assertEquals(
+                2.0,
+                a.movie.w(
+                        Type.REGULAR).build().getCharge(2),
+                0);
+        assertEquals(
+                3.5,
+                a.movie.w(
+                        Type.REGULAR).build().getCharge(3),
+                0);
+        assertEquals(
+                5.0,
+                a.movie.w(
+                        Type.REGULAR).build().getCharge(4),
+                0);
     }
-*/
+
+    @Test
+    public void getChargeForChildrens() {
+        assertEquals(
+                1.5,
+                a.movie.w(
+                        Type.CHILDREN).build().getCharge(1),
+                0);
+        assertEquals(
+                1.5,
+                a.movie.w(
+                        Type.CHILDREN).build().getCharge(2),
+                0);
+        assertEquals(
+                1.5,
+                a.movie.w(
+                        Type.CHILDREN).build().getCharge(3),
+                0);
+        assertEquals(
+                3.0,
+                a.movie.w(
+                        Type.CHILDREN).build().getCharge(4),
+                0);
+        assertEquals(
+                4.5,
+                a.movie.w(
+                        Type.CHILDREN).build().getCharge(5),
+                0);
+    }
+
+    @Test
+    public void getChargeForNewRelease() {
+        assertEquals(
+                3.0,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getCharge(1),
+                0);
+        assertEquals(
+                6.0,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getCharge(2),
+                0);
+        assertEquals(
+                9.0,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getCharge(3),
+                0);
+    }
+
+    @Test
+    public void getPointsForChildrens() {
+        assertEquals(
+                1,
+                a.movie.w(
+                        Type.CHILDREN).build().getPoints(1));
+        assertEquals(
+                1,
+                a.movie.w(
+                        Type.CHILDREN).build().getPoints(2));
+    }
+    @Test
+    public void getPointsForNewRelease() {
+        assertEquals(
+                1,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getPoints(1));
+        assertEquals(
+                2,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getPoints(2));
+        assertEquals(
+                2,
+                a.movie.w(
+                        Type.NEW_RELEASE).build().getPoints(3));
+    }
+
+    @Test
+    public void getPointsForRegular() {
+        assertEquals(
+                1,
+                a.movie.w(
+                        Type.REGULAR).build().getPoints(1));
+        assertEquals(
+                1,
+                a.movie.w(
+                        Type.REGULAR).build().getPoints(2));
+    }
 
     @Test
     public void invalidTitle() {
