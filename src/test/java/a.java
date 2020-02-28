@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 public class a {
     public static CustomerBuilder customer =
             new CustomerBuilder();
@@ -5,6 +7,9 @@ public class a {
             new RentalBuilder();
     public static MovieBuilder movie =
             new MovieBuilder();
+    public static StoreBuilder store =
+            new StoreBuilder();
+
     public static class CustomerBuilder {
         Rental[] rentals;
         String name;
@@ -57,6 +62,10 @@ public class a {
         public Rental build() {
             return new Rental(movie, days);
         }
+
+        public RentalBuilder w(Movie movie) {
+            return new RentalBuilder(movie, 3);
+        }
     }
     public static class MovieBuilder {
         final String name;
@@ -78,6 +87,32 @@ public class a {
         }
         public Movie build() {
             return new Movie(name, type);
+        }
+    }
+
+
+    public static class StoreBuilder {
+
+        private Map<Movie, Integer> movieMap;
+
+        StoreBuilder(Map<Movie, Integer> movieMap) {
+            this.movieMap = movieMap;
+        }
+
+        StoreBuilder() {
+            this.movieMap = new HashMap<>();
+        }
+
+        public StoreBuilder w(Movie... movies) {
+            Map<Movie, Integer> movieMap = new HashMap<>();
+            for ( Movie movie : movies) {
+                movieMap.put(movie, 1);
+            }
+            return new StoreBuilder(movieMap);
+        }
+
+        public Store build() {
+            return new Store(movieMap);
         }
     }
 }
