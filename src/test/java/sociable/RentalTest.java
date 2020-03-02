@@ -72,46 +72,13 @@ public class RentalTest {
     }
 
     @Test
-    public void
-    storeMockNeverReceivesRemove() {
+    public void verifyStoreInteractions() {
         Movie movie = mock(Movie.class);
         Rental rental =
                 a.rental.w(movie).build();
         Store store = mock(Store.class);
-        when(
-                store.getAvailability(
-                        any(Movie.class)))
-                .thenReturn(0);
         rental.start(store);
-        verify(store, never()).remove(movie);
-    }
-    @Test
-    public void failOnStoreRemove() {
-        Movie movie = mock(Movie.class);
-        Rental rental =
-                a.rental.w(movie).build();
-        Store store = new Store(
-                new HashMap<Movie,Integer>()) {
-            public void remove(Movie movie) {
-                fail();
-            }
-        };
-        rental.start(store);
-    }
-
-    @Test
-    public void storeShouldNeverRemove() {
-        final boolean[] removeCalled = { false };
-        Movie movie = mock(Movie.class);
-        Rental rental =
-                a.rental.w(movie).build();
-        Store store = new Store(
-                new HashMap<Movie,Integer>()) {
-            public void remove(Movie movie) {
-                removeCalled[0] = true;
-            }
-        };
-        rental.start(store);
-        assertFalse(removeCalled[0]);
+        verify(store).getAvailability(movie);
+        verifyNoMoreInteractions(store);
     }
 }
