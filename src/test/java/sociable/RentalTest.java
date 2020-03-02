@@ -58,27 +58,15 @@ public class RentalTest {
         assertEquals(
                 1, store.getAvailability(movie));
     }
-
     @Test
     public void
-    notStartedIfUnavailableInteractionBased() {
-        Rental rental = a.rental.build();
-        Store store = mock(Store.class);
-        rental.start(store);
-        assertFalse(rental.isStarted());
-        verify(
-                store, never()).remove(
-                any(Movie.class));
-    }
-
-    @Test
-    public void verifyStoreInteractions() {
-        Movie movie = mock(Movie.class);
+    storeAvailabilityIsUnmodified() {
+        Movie movie = a.movie.build();
         Rental rental =
                 a.rental.w(movie).build();
-        Store store = mock(Store.class);
+        Store store = a.store.build();
         rental.start(store);
-        verify(store).getAvailability(movie);
-        verifyNoMoreInteractions(store);
+        assertEquals(
+                0, store.getAvailability(movie));
     }
 }
