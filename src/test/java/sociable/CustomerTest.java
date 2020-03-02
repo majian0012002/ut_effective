@@ -48,7 +48,7 @@ public class CustomerTest {
                                         Type.CHILDREN))).build()
                         .htmlStatement());
     }
-    
+
     @Test
     public void
     recentRentalsWith3OrderedRentals() {

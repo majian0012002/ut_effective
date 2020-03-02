@@ -15,6 +15,8 @@ public class a {
             new MovieBuilder();
     public static StoreBuilder store =
             new StoreBuilder();
+    public static RegularPriceBuilder regularPrice =
+            new RegularPriceBuilder();
 
     public static class CustomerBuilder {
         Rental[] rentals;
@@ -142,6 +144,13 @@ public class a {
 
         public Store build() {
             return new Store(movieMap);
+        }
+    }
+
+    public static class RegularPriceBuilder {
+
+        public RegularPrice build() {
+            return new RegularPrice();
         }
     }
 }

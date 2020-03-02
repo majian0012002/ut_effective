@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import builder.*;
 public class MovieTest {
 
-
     @Test
     public void getChargeForRegular() {
         assertEquals(
