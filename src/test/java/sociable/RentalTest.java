@@ -37,12 +37,14 @@ public class RentalTest {
         Rental rental =
                 a.rental.w(movie).build();
         Store store = mock(Store.class);
-        when(store.getAvailability(movie))
-                .thenReturn(1);
+        when(store.getAvailability(movie, 1))
+                .thenReturn(true);
         rental.start(store);
         assertTrue(rental.isStarted());
         verify(store).remove(movie);
     }
+
+
     @Test
     public void
     notStartedIfUnavailableInteractionBased() {
