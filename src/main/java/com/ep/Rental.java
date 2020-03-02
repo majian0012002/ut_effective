@@ -39,4 +39,8 @@ public class Rental {
             this.started = true;
         }
     }
+
+    public Movie getMovie(boolean b) {
+        return getMovie();
+    }
 }

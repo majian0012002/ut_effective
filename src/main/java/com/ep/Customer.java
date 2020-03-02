@@ -64,5 +64,16 @@ public class Customer {
         return total;
     }
 
+    public String recentRentals() {
+        String result = "Recent rentals:";
+        for (int i = 0;
+             i < rentals.size() && i < 3;
+             i++) {
+            result += "\n" +
+                    rentals.get(i).getMovie(true).getTitle(
+                            "%s starring %s %s", 2);
+        }
+        return result;
+    }
 
 }

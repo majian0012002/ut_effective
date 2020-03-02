@@ -38,4 +38,8 @@ public class Movie {
     public int getPoints(int daysRented) {
         return price.getPoints(daysRented);
     }
+
+    public String getTitle(String formattingString, int count) {
+        return getTitle();
+    }
 }
