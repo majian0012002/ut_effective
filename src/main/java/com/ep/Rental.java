@@ -43,4 +43,8 @@ public class Rental {
     public Movie getMovie(boolean b) {
         return getMovie();
     }
+
+    public String getTitle() {
+        return movie.getTitle();
+    }
 }

@@ -158,10 +158,7 @@ public class CustomerTest {
 
     @Test
     public void recentRentalsWith2Rentals() {
-        Movie movie = mock(Movie.class);
         Rental rental = mock(Rental.class);
-        when(rental.getMovie(anyBoolean()))
-                .thenReturn(movie);
         assertEquals(
                 "Recent rentals:\nnull\nnull",
                 a.customer.w(rental, rental).build()
