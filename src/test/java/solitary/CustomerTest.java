@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -155,23 +156,48 @@ public class CustomerTest {
                         rental).build().getTotalPoints());
     }
 
+//    @Test
+//    public void recentRentalsWith2Rentals() {
+//        Movie godfather = mock(Movie.class);
+//        when(godfather
+//                .getTitle("%s starring %s %s", 2))
+//                .thenReturn("Godfather 4");
+//        Rental godfatherRental =
+//                mock(Rental.class);
+//        when(godfatherRental.getMovie(true))
+//                .thenReturn(godfather);
+//        Movie lionKing = mock(Movie.class);
+//        when(lionKing
+//                .getTitle("%s starring %s %s", 2))
+//                .thenReturn("Lion King");
+//        Rental lionKingRental =
+//                mock(Rental.class);
+//        when(lionKingRental.getMovie(true))
+//                .thenReturn(lionKing);
+//        assertEquals(
+//                "Recent rentals:\nGodfather 4\n" +
+//                        "Lion King",
+//                a.customer.w(
+//                        godfatherRental, lionKingRental)
+//                        .build().recentRentals());
+//    }
+
     @Test
     public void recentRentalsWith2Rentals() {
         Movie godfather = mock(Movie.class);
-        when(godfather
-                .getTitle("%s starring %s %s", 2))
+        when(godfather.getTitle(
+                anyString(), anyInt()))
                 .thenReturn("Godfather 4");
         Rental godfatherRental =
                 mock(Rental.class);
-        when(godfatherRental.getMovie(true))
+        when(godfatherRental.getMovie(anyBoolean()))
                 .thenReturn(godfather);
         Movie lionKing = mock(Movie.class);
-        when(lionKing
-                .getTitle("%s starring %s %s", 2))
+        when(lionKing.getTitle(
+                anyString(), anyInt()))
                 .thenReturn("Lion King");
-        Rental lionKingRental =
-                mock(Rental.class);
-        when(lionKingRental.getMovie(true))
+        Rental lionKingRental = mock(Rental.class);
+        when(lionKingRental.getMovie(anyBoolean()))
                 .thenReturn(lionKing);
         assertEquals(
                 "Recent rentals:\nGodfather 4\n" +
@@ -224,7 +250,7 @@ public class CustomerTest {
         when(notebookRental.getMovie(true))
                 .thenReturn(notebook);
         assertEquals(
-                "Recent rentals:"+
+                "Recent rentals:" +
                         "\nGodfather 4\nLion King" +
                         "\nScarface",
                 a.customer.w(
