@@ -156,52 +156,20 @@ public class CustomerTest {
                         rental).build().getTotalPoints());
     }
 
-//    @Test
-//    public void recentRentalsWith2Rentals() {
-//        Movie godfather = mock(Movie.class);
-//        when(godfather
-//                .getTitle("%s starring %s %s", 2))
-//                .thenReturn("Godfather 4");
-//        Rental godfatherRental =
-//                mock(Rental.class);
-//        when(godfatherRental.getMovie(true))
-//                .thenReturn(godfather);
-//        Movie lionKing = mock(Movie.class);
-//        when(lionKing
-//                .getTitle("%s starring %s %s", 2))
-//                .thenReturn("Lion King");
-//        Rental lionKingRental =
-//                mock(Rental.class);
-//        when(lionKingRental.getMovie(true))
-//                .thenReturn(lionKing);
-//        assertEquals(
-//                "Recent rentals:\nGodfather 4\n" +
-//                        "Lion King",
-//                a.customer.w(
-//                        godfatherRental, lionKingRental)
-//                        .build().recentRentals());
-//    }
-
     @Test
     public void recentRentalsWith2Rentals() {
         Movie godfather = mock(Movie.class);
-        when(godfather.getTitle(
-                anyString(), anyInt()))
-                .thenReturn("Godfather 4");
         Rental godfatherRental =
                 mock(Rental.class);
         when(godfatherRental.getMovie(anyBoolean()))
                 .thenReturn(godfather);
         Movie lionKing = mock(Movie.class);
-        when(lionKing.getTitle(
-                anyString(), anyInt()))
-                .thenReturn("Lion King");
-        Rental lionKingRental = mock(Rental.class);
+        Rental lionKingRental =
+                mock(Rental.class);
         when(lionKingRental.getMovie(anyBoolean()))
                 .thenReturn(lionKing);
         assertEquals(
-                "Recent rentals:\nGodfather 4\n" +
-                        "Lion King",
+                "Recent rentals:\nnull\nnull",
                 a.customer.w(
                         godfatherRental, lionKingRental)
                         .build().recentRentals());
