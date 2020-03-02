@@ -1,6 +1,5 @@
 package com.ep;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.RuntimeMXBean;
 
@@ -9,24 +8,35 @@ public class PidWriter {
             String filename,
             RuntimeMXBean bean) {
         try {
-            writePidtoFile(filename, bean);
+            FileWriterGateway writer =
+                    new FileWriterGateway(filename);
+            writePid(writer, bean);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void writePid(
+            FileWriterGateway facade,
+            RuntimeMXBean bean) {
+        try {
+            writePidtoFile(facade, bean);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     private static void writePidtoFile(
-            String filename,
+            FileWriterGateway facade,
             RuntimeMXBean bean) throws IOException {
-        FileWriterGateway writer =
-                new FileWriterGateway(filename);
         try {
             String runtimeName = bean.getName();
-            writer.write(
+            facade.write(
                     runtimeName.substring(
                             0, runtimeName.indexOf('@')));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         finally {
-            writer.close();
+            facade.close();
         }
     }
 }

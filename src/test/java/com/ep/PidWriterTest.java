@@ -8,8 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PidWriterTest extends Solitary {
     @Test
@@ -17,12 +16,9 @@ public class PidWriterTest extends Solitary {
         RuntimeMXBean bean =
                 mock(RuntimeMXBean.class);
         when(bean.getName()).thenReturn("12@X");
-        PidWriter.writePid(
-                "/tmp/sample.pid", bean);
-        assertEquals(
-                "12",
-                Files.readAllLines(
-                        Paths.get("/tmp/sample.pid"),
-                        Charset.defaultCharset()).get(0));
+        FileWriterGateway facade =
+                mock(FileWriterGateway.class);
+        PidWriter.writePid(facade, bean);
+        verify(facade).write("12");
     }
 }
