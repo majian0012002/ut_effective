@@ -157,63 +157,48 @@ public class CustomerTest {
     }
 
     @Test
-    public void recentRentalsWith2Rentals() {
-        Rental rental = mock(Rental.class);
+    public void recentRentals0Rentals() {
+        assertEquals(
+                "Recent rentals:",
+                a.customer.build().recentRentals());
+    }
+    @Test
+    public void recentRentals1Rental() {
+        assertEquals(
+                "Recent rentals:\nnull",
+                a.customer.w(
+                        mock(Rental.class)).build()
+                        .recentRentals());
+    }
+    @Test
+    public void recentRentals2Rental() {
         assertEquals(
                 "Recent rentals:\nnull\nnull",
-                a.customer.w(rental, rental).build()
+                a.customer.w(
+                        mock(Rental.class),
+                        mock(Rental.class)).build()
+                        .recentRentals());
+    }
+    @Test
+    public void recentRentals3Rental() {
+        assertEquals(
+                "Recent rentals:\nnull\nnull\nnull",
+                a.customer.w(
+                        mock(Rental.class),
+                        mock(Rental.class),
+                        mock(Rental.class)).build()
+                        .recentRentals());
+    }
+    @Test
+    public void recentRentals4Rental() {
+        assertEquals(
+                "Recent rentals:\nnull\nnull\nnull",
+                a.customer.w(
+                        mock(Rental.class),
+                        mock(Rental.class),
+                        mock(Rental.class),
+                        mock(Rental.class)).build()
                         .recentRentals());
     }
 
-    @Test
-    public void recentRentalsWith3Rentals() {
-// same structure as above, with
-// 8 more lines of mocking code,
-// 25% longer expected value, and
-// 2 lines of adding rentals to customer
-    }
-
-    @Test
-    public void recentRentalsWith4Rentals() {
-        Movie godfather = mock(Movie.class);
-        when(godfather
-                .getTitle("%s starring %s %s", 2))
-                .thenReturn("Godfather 4");
-        Rental godfatherRental =
-                mock(Rental.class);
-        when(godfatherRental.getMovie(true))
-                .thenReturn(godfather);
-        Movie lionKing = mock(Movie.class);
-        when(lionKing
-                .getTitle("%s starring %s %s", 2))
-                .thenReturn("Lion King");
-        Rental lionKingRental =
-                mock(Rental.class);
-        when(lionKingRental.getMovie(true))
-                .thenReturn(lionKing);
-        Movie scarface = mock(Movie.class);
-        when(scarface
-                .getTitle("%s starring %s %s", 2))
-                .thenReturn("Scarface");
-        Rental scarfaceRental =
-                mock(Rental.class);
-        when(scarfaceRental.getMovie(true))
-                .thenReturn(scarface);
-        Movie notebook = mock(Movie.class);
-        when(notebook
-                .getTitle("%s starring %s %s", 2))
-                .thenReturn("Notebook");
-        Rental notebookRental =
-                mock(Rental.class);
-        when(notebookRental.getMovie(true))
-                .thenReturn(notebook);
-        assertEquals(
-                "Recent rentals:" +
-                        "\nGodfather 4\nLion King" +
-                        "\nScarface",
-                a.customer.w(
-                        godfatherRental, lionKingRental,
-                        scarfaceRental, notebookRental)
-                        .build().recentRentals());
-    }
 }

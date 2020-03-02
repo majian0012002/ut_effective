@@ -48,5 +48,18 @@ public class CustomerTest {
                                         Type.CHILDREN))).build()
                         .htmlStatement());
     }
-
+    
+    @Test
+    public void
+    recentRentalsWith3OrderedRentals() {
+        assertEquals(
+                "Recent rentals:"+
+                        "\nGodfather 4\nLion King\nScarface",
+                a.customer.w(
+                        a.rental.w(a.movie.w("Godfather 4")),
+                        a.rental.w(a.movie.w("Lion King")),
+                        a.rental.w(a.movie.w("Scarface")),
+                        a.rental.w(a.movie.w("Notebook")))
+                        .build().recentRentals());
+    }
 }
