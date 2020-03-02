@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PidWriterTest {
+public class PidWriterTest extends Solitary {
     @Test
     public void writePid() throws Exception {
         RuntimeMXBean bean =

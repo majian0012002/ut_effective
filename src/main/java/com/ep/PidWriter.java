@@ -17,8 +17,8 @@ public class PidWriter {
     private static void writePidtoFile(
             String filename,
             RuntimeMXBean bean) throws IOException {
-        FileWriter writer =
-                new FileWriter(filename);
+        FileWriterGateway writer =
+                new FileWriterGateway(filename);
         try {
             String runtimeName = bean.getName();
             writer.write(
