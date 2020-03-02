@@ -1,5 +1,6 @@
-package com.ep;
+package solitary;
 
+import com.ep.FileWriterGateway;
 import org.junit.Before;
 
 public class Solitary {

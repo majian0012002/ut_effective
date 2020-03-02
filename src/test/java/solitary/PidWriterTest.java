@@ -1,13 +1,11 @@
-package com.ep;
+package solitary;
 
+import com.ep.FileWriterGateway;
+import com.ep.PidWriter;
 import org.junit.Test;
 
 import java.lang.management.RuntimeMXBean;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class PidWriterTest extends Solitary {
