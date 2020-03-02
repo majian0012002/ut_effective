@@ -30,20 +30,44 @@ public class RentalTest {
                 0, store.getAvailability(movie));
     }
 
+//    @Test
+//    public void
+//    isStartedIfInStoreInteractionBased() {
+//        Movie movie = a.movie.build();
+//        Rental rental =
+//                a.rental.w(movie).build();
+//        Store store = mock(Store.class);
+//        when(store.getAvailability(movie, 1))
+//                .thenReturn(true);
+//        rental.start(store);
+//        assertTrue(rental.isStarted());
+//        verify(store).remove(movie);
+//    }
+
+    @Test
+    public void rentalIsStartedIfInStore() {
+        Rental rental = a.rental.build();
+        Store store = mock(Store.class);
+        when(store
+                .getAvailability(any(Movie.class)))
+                .thenReturn(1);
+        rental.start(store);
+        assertTrue(rental.isStarted());
+    }
+
     @Test
     public void
-    isStartedIfInStoreInteractionBased() {
+    storeAvailabilityIsModifiedOnRental() {
         Movie movie = a.movie.build();
         Rental rental =
                 a.rental.w(movie).build();
-        Store store = mock(Store.class);
-        when(store.getAvailability(movie, 1))
-                .thenReturn(true);
+        Store store =
+                a.store.w(movie, movie).build();
         rental.start(store);
-        assertTrue(rental.isStarted());
-        verify(store).remove(movie);
+        a.rental.build().start(store);
+        assertEquals(
+                1, store.getAvailability(movie));
     }
-
 
     @Test
     public void
