@@ -158,21 +158,14 @@ public class CustomerTest {
 
     @Test
     public void recentRentalsWith2Rentals() {
-        Movie godfather = mock(Movie.class);
-        Rental godfatherRental =
-                mock(Rental.class);
-        when(godfatherRental.getMovie(anyBoolean()))
-                .thenReturn(godfather);
-        Movie lionKing = mock(Movie.class);
-        Rental lionKingRental =
-                mock(Rental.class);
-        when(lionKingRental.getMovie(anyBoolean()))
-                .thenReturn(lionKing);
+        Movie movie = mock(Movie.class);
+        Rental rental = mock(Rental.class);
+        when(rental.getMovie(anyBoolean()))
+                .thenReturn(movie);
         assertEquals(
                 "Recent rentals:\nnull\nnull",
-                a.customer.w(
-                        godfatherRental, lionKingRental)
-                        .build().recentRentals());
+                a.customer.w(rental, rental).build()
+                        .recentRentals());
     }
 
     @Test
