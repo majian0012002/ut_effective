@@ -1,5 +1,7 @@
 package util;
 
+import com.ep.Money;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -16,5 +18,10 @@ public class Assert {
             fail("No exception thrown");
         else
             assertEquals(ex, exThrown.getClass());
+    }
+
+    public static void assertMoney(
+            double d, Money m) {
+        assertEquals(d, m.toDouble(), 0);
     }
 }

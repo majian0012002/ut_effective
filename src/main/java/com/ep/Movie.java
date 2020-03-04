@@ -31,10 +31,12 @@ public class Movie {
         }
     }
 
-    public double getCharge(int daysRented) {
+//    public double getCharge(int daysRented) {
+//        return price.getCharge(daysRented);
+//    }
+    public Money getCharge(int daysRented) {
         return price.getCharge(daysRented);
     }
-
     public int getPoints(int daysRented) {
         return price.getPoints(daysRented);
     }

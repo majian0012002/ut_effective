@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static util.Assert.assertMoney;
 
 public class RegularPriceTest {
 
@@ -18,10 +19,9 @@ public class RegularPriceTest {
 
     @Test
     public void chargeWithStaticVal() {
-        assertEquals(
+        assertMoney(
                 basePrice,
-                a.regularPrice.build().getCharge(2),
-                0);
+                a.regularPrice.build().getCharge(2));
     }
     @Test
     public void chargeWithLocalVal() {
@@ -29,17 +29,15 @@ public class RegularPriceTest {
         double charge =
                 basePrice + (
                         daysRented - 2) * multiplier;
-        assertEquals(
+        assertMoney(
                 charge,
                 a.regularPrice.build().getCharge(
-                        daysRented),
-                0);
+                        daysRented));
     }
     @Test
     public void chargeWithLiteral() {
-        assertEquals(
+        assertMoney(
                 5.0,
-                a.regularPrice.build().getCharge(4),
-                0);
+                a.regularPrice.build().getCharge(4));
     }
 }

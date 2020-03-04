@@ -18,10 +18,9 @@ public class Rental {
         return daysRented;
     }
 
-    public double getCharge() {
+    public Money getCharge() {
         return movie.getCharge(daysRented);
     }
-
     public int getPoints() {
         return movie.getPoints(daysRented);
     }

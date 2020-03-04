@@ -18,6 +18,21 @@ public class a {
     public static RegularPriceBuilder regularPrice =
             new RegularPriceBuilder();
 
+    public static MoneyBuidler money = new MoneyBuidler();
+
+    public static class MoneyBuidler {
+        private double number;
+        public MoneyBuidler w(double number) {
+            this.number = number;
+            return this;
+        }
+
+        public Money build() {
+            return new Money(number);
+        }
+
+    }
+
     public static class CustomerBuilder {
         Rental[] rentals;
         String name;
@@ -153,4 +168,6 @@ public class a {
             return new RegularPrice();
         }
     }
+
+
 }

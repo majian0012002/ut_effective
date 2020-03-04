@@ -50,10 +50,10 @@ public class Customer {
         return result;
     }
 
-    public double getTotalCharge() {
-        double total = 0;
+    public Money getTotalCharge() {
+        Money total = new Money(0.0);
         for (Rental rental : rentals)
-            total += rental.getCharge();
+            total = total.add(rental.getCharge());
         return total;
     }
 

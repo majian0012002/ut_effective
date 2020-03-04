@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static util.Assert.assertMoney;
+
 public class RentalTest {
     @Test
     public void
@@ -68,5 +70,15 @@ public class RentalTest {
         rental.start(store);
         assertEquals(
                 0, store.getAvailability(movie));
+    }
+
+    @Test
+    public void getChargeFromMovie() {
+        Movie movie = mock(Movie.class);
+        when(movie.getCharge(any(Integer.class)))
+                .thenReturn(a.money.w(1.5).build());
+        assertMoney(
+                1.5,
+                a.rental.w(movie).build().getCharge());
     }
 }

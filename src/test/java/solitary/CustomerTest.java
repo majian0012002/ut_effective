@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static util.Assert.assertMoney;
 import static util.Assert.assertThrows;
 
 public class CustomerTest {
@@ -96,36 +97,35 @@ public class CustomerTest {
     }
 
     @Test
-    public void noRentalsCharge() {
-        assertEquals(
+    public void chargeForNoRentals() {
+        assertMoney(
                 0.0,
-                a.customer.build().getTotalCharge(),
-                0);
+                a.customer.build().getTotalCharge());
+    }
+    @Test
+    public void chargeForOneRental() {
+        Rental rental = mock(Rental.class);
+        when(rental.getCharge())
+                .thenReturn(a.money.w(2.0).build());
+        assertMoney(
+                2.0,
+                a.customer.w(
+                        rental).build().getTotalCharge());
     }
 
     @Test
-    public void twoRentalsCharge() {
-        Rental rental = mock(Rental.class);
-        when(rental.getCharge()).thenReturn(2.0);
-        assertEquals(
-                4.0,
+    public void chargeForTwoRentals() {
+        Rental rental1 = mock(Rental.class);
+        when(rental1.getCharge())
+                .thenReturn(a.money.w(2.2).build());
+        Rental rental2 = mock(Rental.class);
+        when(rental2.getCharge())
+                .thenReturn(a.money.w(3.5).build());
+        assertMoney(
+                5.7,
                 a.customer.w(
-                        rental,
-                        rental).build().getTotalCharge(),
-                0);
-    }
-
-    @Test
-    public void threeRentalsCharge() {
-        Rental rental = mock(Rental.class);
-        when(rental.getCharge()).thenReturn(2.0);
-        assertEquals(
-                6.0,
-                a.customer.w(
-                        rental,
-                        rental,
-                        rental).build().getTotalCharge(),
-                0);
+                        rental1,
+                        rental2).build().getTotalCharge());
     }
 
     @Test
@@ -221,5 +221,6 @@ public class CustomerTest {
                 IllegalArgumentException.class,
                 e.getClass());
     }
+
 
 }
