@@ -1,5 +1,7 @@
 package util;
 
+import java.util.function.Function;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,6 +34,19 @@ public class MockitoExtensions {
                 Object returnValue) {
             this.returnValue = returnValue;
             return this;
+        }
+    }
+    public static <T> T stub(
+            Class<T> klass,
+            Function<T,Object> f,
+            Object returnVal) {
+        try {
+            T result = mock(klass);
+            when(f.apply(result))
+                    .thenReturn(returnVal);
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -160,7 +160,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void chargeForTwoRentals() {
+    public void chargeForTwoRentals_new3() {
         assertMoney(
                 5.7,
                 a.customer.build().addRentals(
@@ -172,6 +172,20 @@ public class CustomerTest {
                                 stub(Rental.class)
                                         .returning(a.money.w(3.5).build())
                                         .from().getCharge()))
+                        .getTotalCharge());
+    }
+
+    @Test
+    public void chargeForTwoRentals() {
+        assertMoney(
+                5.7,
+                a.customer.build().addRentals(
+                        stub(Rental.class,
+                                s -> s.getCharge(),
+                                a.money.w(2.2).build()),
+                        stub(Rental.class,
+                                s -> s.getCharge(),
+                                a.money.w(3.5).build()))
                         .getTotalCharge());
     }
 
