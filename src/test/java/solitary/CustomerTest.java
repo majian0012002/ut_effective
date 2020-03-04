@@ -7,10 +7,12 @@ import com.ep.Type;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.ep.Type.UNKNOWN;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static util.Assert.assertThrows;
 
 public class CustomerTest {
     @Test
@@ -199,6 +201,25 @@ public class CustomerTest {
                         mock(Rental.class),
                         mock(Rental.class)).build()
                         .recentRentals());
+    }
+
+    @Test
+    public void invalidTitleCustomAssertion() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> a.movie.w(UNKNOWN).build());
+    }
+    @Test
+    public void invalidTitleWithoutCA() {
+        Exception e = null;
+        try {
+            a.movie.w(UNKNOWN).build();
+        } catch (Exception ex) {
+            e = ex;
+        }
+        assertEquals(
+                IllegalArgumentException.class,
+                e.getClass());
     }
 
 }
