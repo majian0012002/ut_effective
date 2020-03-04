@@ -18,20 +18,24 @@ public class a {
     public static RegularPriceBuilder regularPrice =
             new RegularPriceBuilder();
 
-    public static MoneyBuidler money = new MoneyBuidler();
+    public static MoneyBuilder money = new MoneyBuilder();
 
-    public static class MoneyBuidler {
-        private double number;
-        public MoneyBuidler w(double number) {
-            this.number = number;
-            return this;
+    public static class MoneyBuilder {
+        final double val;
+        MoneyBuilder() {
+            this(1.0);
         }
-
+        MoneyBuilder(double val) {
+            this.val = val;
+        }
+        public MoneyBuilder w(double val) {
+            return new MoneyBuilder(val);
+        }
         public Money build() {
-            return new Money(number);
+            return new Money(val);
         }
-
     }
+
 
     public static class CustomerBuilder {
         Rental[] rentals;

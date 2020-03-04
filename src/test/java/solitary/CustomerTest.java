@@ -1,6 +1,7 @@
 package solitary;
 
 import builder.a;
+import com.ep.Customer;
 import com.ep.Movie;
 import com.ep.Rental;
 import com.ep.Type;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static util.Assert.assertMoney;
 import static util.Assert.assertThrows;
+import static util.MockitoExtensions.*;
 
 public class CustomerTest {
     @Test
@@ -114,7 +116,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void chargeForTwoRentals() {
+    public void chargeForTwoRentals_old() {
         Rental rental1 = mock(Rental.class);
         when(rental1.getCharge())
                 .thenReturn(a.money.w(2.2).build());
@@ -126,6 +128,51 @@ public class CustomerTest {
                 a.customer.w(
                         rental1,
                         rental2).build().getTotalCharge());
+    }
+
+    @Test
+    public void chargeForTwoRentals_new1() {
+        Rental rental1 = mock(Rental.class);
+        when(rental1.getCharge())
+                .thenReturn(a.money.w(2.2).build());
+        Rental rental2 = mock(Rental.class);
+        when(rental2.getCharge())
+                .thenReturn(a.money.w(3.5).build());
+        Customer customer = a.customer.build();
+        customer.addRental(rental1);
+        customer.addRental(rental2);
+        assertMoney(
+                5.7, customer.getTotalCharge());
+    }
+
+    @Test
+    public void chargeForTwoRentals_new2() {
+        Rental rental1 = mock(Rental.class);
+        when(rental1.getCharge())
+                .thenReturn(a.money.w(2.2).build());
+        Rental rental2 = mock(Rental.class);
+        when(rental2.getCharge())
+                .thenReturn(a.money.w(3.5).build());
+        assertMoney(
+                5.7,
+                a.customer.build().addRentals(
+                        rental1, rental2).getTotalCharge());
+    }
+
+    @Test
+    public void chargeForTwoRentals() {
+        assertMoney(
+                5.7,
+                a.customer.build().addRentals(
+                        create(
+                                stub(Rental.class)
+                                        .returning(a.money.w(2.2).build())
+                                        .from().getCharge()),
+                        create(
+                                stub(Rental.class)
+                                        .returning(a.money.w(3.5).build())
+                                        .from().getCharge()))
+                        .getTotalCharge());
     }
 
     @Test
